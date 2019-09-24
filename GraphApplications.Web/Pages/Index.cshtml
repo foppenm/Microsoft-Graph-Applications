@@ -1,0 +1,154 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<script>
+    function executeDownload() {
+        function download_csv(csv, filename) {
+            var csvFile;
+            var downloadLink;
+
+            csvFile = new Blob([csv], { type: "text/csv" });
+            downloadLink = document.createElement("a");
+            downloadLink.download = filename;
+            downloadLink.href = window.URL.createObjectURL(csvFile);
+            downloadLink.style.display = "none";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+        }
+
+        function export_table_to_csv(filename) {
+            var csv = [];
+            var rows = document.querySelectorAll("table tr");
+
+            for (var i = 0; i < rows.length; i++) {
+                var row = [], cols = rows[i].querySelectorAll("td, th");
+
+                for (var j = 0; j < cols.length; j++) {
+                    row.push(`"${cols[j].innerText}"`);
+                }
+
+                csv.push(row.join(","));
+            }
+
+            download_csv(csv.join("\n"), filename);
+        }
+
+        export_table_to_csv("Export.csv");
+    }
+</script>
+
+<div class="text-center">
+    <h1 class="display-4" style="padding:15px">Azure Active Directory Application Registrations</h1>
+</div>
+
+<button class="btn-outline-dark" onclick="executeDownload()">Export all to CSV</button>
+
+<div class="table" style="padding:15px">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Application Id</th>
+                <th>Application Name</th>
+                <th>API Name</th>
+                <th>Delegated Permissions</th>
+                <th>Application Permissions</th>
+                <th>Secrets</th>
+                <th>Certificates</th>
+                <th>Owners</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var application in Model?.Applications ?? new List<Core.Entities.GraphServiceBetaClient.ApplicationRegistration>())
+            {
+                @if (!application.Services.Any())
+                {
+                    <tr>
+                        <td>@application.Id</td>
+                        <td>@application.DisplayName</td>
+                        <td>No API set</td>
+                        <td>No Delegated Permissions</td>
+                        <td>No Application Permissions</td>
+                        <td>No Client Secrets</td>
+                    </tr>
+                }
+
+                @foreach (var service in application.Services)
+                {
+                    <tr>
+                        @if (application.Services.IndexOf(service) == 0)
+                        {
+                            <td>@application.Id</td>
+                            <td>@application.DisplayName</td>
+                        }
+                        else
+                        {
+                            <td style="color: transparent">@application.Id</td>
+                            <td style="color: transparent">@application.DisplayName</td>
+                        }
+                        <td>@service.DisplayName</td>
+                        <td>
+                            <ul>
+                                @foreach (var delegatedPermission in service.DelegatedPermissions)
+                                {
+                                    <li>@delegatedPermission.Permission</li>
+                                }
+                            </ul>
+                            @if (!service.DelegatedPermissions.Any())
+                            {
+                                @:No Delegated Permissions
+                            }
+                        </td>
+                        <td>
+                            <ul>
+                                @foreach (var applicationPermissions in service.ApplicationPermissions)
+                                {
+                                    <li>@applicationPermissions.Permission</li>
+                                }
+                            </ul>
+                            @if (!service.ApplicationPermissions.Any())
+                            {
+                                @:No Application Permissions
+                            }
+                        </td>
+                        <td>
+                            <ul>
+                                @foreach (var secret in application.Secrets)
+                                {
+                                    <li>@secret</li>
+                                }
+                            </ul>
+                            @if (!application.Secrets.Any())
+                            {
+                                @:No Client Secrets
+                            }
+                        </td>
+                        <td>
+                            <ul>
+                                @foreach (var cert in application.Certificates)
+                                {
+                                    <li>@cert</li>
+                                }
+                            </ul>
+
+                            @if (!application.Certificates.Any())
+                            {
+                                @:No Certificates
+                            }
+                        </td>
+                        <td>
+                            <ul>
+                                @foreach (var owner in application.Owners)
+                                {
+                                    <li>@owner</li>
+                                }
+                            </ul>
+                        </td>
+                    </tr>
+                }
+            }
+        </tbody>
+    </table>
+</div>

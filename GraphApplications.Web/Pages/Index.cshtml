@@ -66,7 +66,7 @@
                 @if (!application.Services.Any())
                 {
                     <tr>
-                        <td>@application.Id</td>
+                        <td><a href="https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/Overview/appId/@application.Id">@application.Id</a></td>
                         <td>@application.DisplayName</td>
                         <td>No API set</td>
                         <td>No Delegated Permissions</td>
@@ -80,7 +80,7 @@
                     <tr>
                         @if (application.Services.IndexOf(service) == 0)
                         {
-                            <td>@application.Id</td>
+                            <td><a href="https://portal.azure.com/#blade/Microsoft_AAD_RegisteredApps/ApplicationMenuBlade/Overview/appId/@application.Id">@application.Id</a></td>
                             <td>@application.DisplayName</td>
                         }
                         else

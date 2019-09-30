@@ -44,7 +44,26 @@
     <h1 class="display-4" style="padding:15px">Azure Active Directory Application Registrations</h1>
 </div>
 
-<button type="button" class="btn btn-info" style="margin:10px;" onclick="executeDownload()">Export all to CSV</button>
+<div class="row">
+    <div class="col-sm-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Export</h5>
+                <p class="card-text">Export all the applications to a CSV file.</p>
+                <button type="button" class="btn btn-primary" onclick="executeDownload()">Export all to CSV</button>
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Numbers</h5>
+                <p class="card-text">Application Registrations: <b>@Model.NumberOfApplications</b></p>
+                <p class="card-text">Apps with Application Permissions without secrets or certificates: <b>@Model.AppsWithoutSecretsOrCertificates</b></p>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="table" style="padding:15px">
     <table class="table table-striped">

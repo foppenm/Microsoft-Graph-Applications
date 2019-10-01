@@ -37,7 +37,16 @@ namespace GraphApplications.Infrastructure
         {
             // Get Applications For Current Tenant
             var applicationsJson = await GetFromGraph("/applications");
-            var applications = JsonConvert.DeserializeObject<GraphApplicationsResult>(applicationsJson).Applications;
+            var graphObject = JsonConvert.DeserializeObject<GraphApplicationsResult>(applicationsJson);
+            var applications = graphObject.Applications.ToList();
+
+            while(!string.IsNullOrEmpty(graphObject.OdataNextLink))
+            {
+                var nextResult = await GetFromGraph(graphObject.OdataNextLink.Replace("https://graph.microsoft.com/beta", ""));
+                graphObject = JsonConvert.DeserializeObject<GraphApplicationsResult>(nextResult);
+                applications.AddRange(graphObject.Applications);
+            }
+
             if (applications == null)
                 throw new InvalidOperationException("No Applications Found in your tenant");
 

@@ -91,6 +91,19 @@
                         <td>No Delegated Permissions</td>
                         <td>No Application Permissions</td>
                         <td>No Client Secrets</td>
+                        <td>No Certificates</td>
+                        <td>
+                            <ul>
+                                @foreach (var owner in application.Owners)
+                                {
+                                    <li>@owner</li>
+                                }
+                            </ul>
+                            @if (!application.Owners.Any())
+                            {
+                                @:No Owners
+                            }
+                        </td>
                     </tr>
                 }
 
@@ -164,6 +177,10 @@
                                     <li>@owner</li>
                                 }
                             </ul>
+                            @if (!application.Owners.Any())
+                            {
+                                @:No Owners
+                            }
                         </td>
                     </tr>
                 }

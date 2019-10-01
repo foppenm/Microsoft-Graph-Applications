@@ -271,6 +271,9 @@ namespace GraphApplications.Core.Entities.MicrosoftGraph.Applications
         [JsonProperty("@odata.context")]
         public string OdataContext { get; set; }
 
+        [JsonProperty("@odata.nextLink")]
+        public string OdataNextLink { get; set; }
+
         [JsonProperty("value")]
         public IList<GraphApplication> Applications { get; set; }
     }

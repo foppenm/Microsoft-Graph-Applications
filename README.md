@@ -22,6 +22,7 @@ Blog: Coming soon with an explanation of the code.
 * Overview of all your Application Registrations
 * View expiry date of Secrets and Certificates
 * View registered Owner
+* Direct deeplink to the specific application
 * Export to CSV
 
 ## Prerequisites

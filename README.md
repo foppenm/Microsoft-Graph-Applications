@@ -22,7 +22,7 @@ Blog: Coming soon with an explanation of the code.
 * Overview of all your Application Registrations
 * View expiry date of Secrets and Certificates
 * View registered Owner
-* Direct deeplink to the specific application
+* Direct deep-link to the specific application
 * Export to CSV
 
 ## Prerequisites
@@ -72,8 +72,6 @@ https://login.microsoftonline.com/TENANT_ID/adminconsent?client_id=APPLICATION_I
 
 3. After authenticating, the Tenant Administrator will be presented with a dialog like the following (depending on the permissions the application is requesting)
 
- >![Scope consent dialog](readme-images/Scope.PNG)
-
 4. By clicking on "Accept" in this dialog, the Tenant Administrator is granting consent to all users of this organization to use this application. Now this application will have the correct scopes (permissions) need to access the directory data for reading application registrations.
 
 ## Build and run the sample
@@ -83,7 +81,7 @@ https://login.microsoftonline.com/TENANT_ID/adminconsent?client_id=APPLICATION_I
 3. Run the application.
 
 ## Deploy the sample to Azure
-Do **not** do this. Since we use a Client and Secret your Azure Active Directory Application Registrations will be publicly available because there is no sign-in required. In my opinion, you should run this demo app only on your local machine.
+Do **not** do this! Since we use a Client and Secret your Azure Active Directory Application Registrations will be publicly available because there is no sign-in required. In my opinion, you should run this demo app only on your local machine.
 
 ## User interface
 ![ui](readme-images/Ui.png)
